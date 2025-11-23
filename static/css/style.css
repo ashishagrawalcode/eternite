@@ -1,0 +1,696 @@
+/* =========================================
+   1. DESIGN SYSTEM & VARIABLES
+   ========================================= */
+:root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+
+    /* PALETTE */
+    --gold: #D4AF37;
+    --gold-hover: #B4942D;
+    --charcoal: #121212;
+    --off-white: #F9F9F9;
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-bg: rgba(255, 255, 255, 0.90);
+}
+
+/* GLOBAL RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--off-white);
+    color: var(--charcoal);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* =========================================
+   2. NAVBAR & NAVIGATION
+   ========================================= */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    transition: all 0.4s ease;
+    border-bottom: 1px solid transparent;
+}
+
+/* Scrolled State (Glassmorphism) */
+nav.scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO */
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--charcoal);
+    text-decoration: none;
+    position: relative;
+}
+.logo::after {
+    content: '.';
+    color: var(--gold);
+    font-size: 2.5rem;
+    line-height: 0;
+    position: absolute;
+    right: -12px;
+    bottom: 8px;
+}
+
+/* CENTER LINKS */
+.nav-links { display: flex; gap: 3rem; }
+.nav-links a {
+    text-decoration: none;
+    color: var(--charcoal);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0; height: 1px;
+    bottom: -5px; left: 0;
+    background-color: var(--gold);
+    transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* RIGHT SIDE ACTIONS (Icons) */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--charcoal);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+.icon-btn:hover {
+    color: var(--gold);
+    transform: translateY(-2px);
+}
+
+/* Navbar Wishlist Indicator (Pink Dot) */
+.icon-btn.has-items::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 8px; height: 8px;
+    background-color: #E8A0A0;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+/* Cart Badge */
+.cart-badge {
+    position: absolute;
+    top: -5px; right: -8px;
+    background-color: var(--charcoal);
+    color: var(--gold);
+    font-size: 0.6rem;
+    font-weight: 700;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid white;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: -10px;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; top: 100%;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    padding: 10px 0;
+    border-radius: 2px;
+    z-index: 1100;
+    animation: fadeIn 0.3s ease;
+}
+.profile-dropdown:hover .dropdown-content { display: block; }
+.dropdown-content a {
+    color: var(--charcoal);
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+    text-align: left;
+}
+.dropdown-content a:hover {
+    background-color: var(--off-white);
+    color: var(--gold);
+}
+
+/* =========================================
+   3. HERO SECTION
+   ========================================= */
+.hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    color: white;
+}
+.hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.2) 40%, 
+        rgba(0,0,0,0.6) 100%
+    );
+}
+.hero-content h1 {
+    font-family: var(--font-heading);
+    font-size: 4.5rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.hero-content h1 span { font-style: italic; font-family: var(--font-heading); }
+.hero-content p {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+.btn-glass {
+    padding: 1rem 3rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.4);
+    backdrop-filter: blur(4px);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.btn-glass:hover {
+    background: white;
+    color: var(--charcoal);
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+
+/* =========================================
+   4. SHOP & FILTERS
+   ========================================= */
+.section-title {
+    text-align: center;
+    margin: 6rem 0 2rem;
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--charcoal);
+}
+.filter-container {
+    display: flex; justify-content: center; gap: 2rem;
+    margin-bottom: 4rem; flex-wrap: wrap; padding: 0 1rem;
+}
+.filter-btn {
+    background: transparent; border: none;
+    font-family: var(--font-body); font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: #999; cursor: pointer;
+    padding-bottom: 8px; border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+.filter-btn:hover { color: var(--gold); }
+.filter-btn.active {
+    color: var(--charcoal);
+    border-bottom-color: var(--gold);
+    font-weight: 600;
+}
+
+/* =========================================
+   5. PRODUCTS GRID
+   ========================================= */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 3rem;
+    padding-bottom: 6rem;
+    max-width: 1200px; margin: 0 auto;
+    padding-left: 20px; padding-right: 20px;
+}
+.product-card {
+    background: white;
+    border: 1px solid #f0f0f0;
+    transition: transform 0.4s ease;
+    animation: fadeIn 0.6s ease-in-out; 
+}
+.product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+
+.product-img-container {
+    height: 400px;
+    background: #F4F1EA;
+    overflow: hidden;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+}
+.product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+.product-card:hover .product-img { transform: scale(1.08); }
+
+.product-info { padding: 2rem; text-align: center; }
+.product-cat { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 0.5rem; display: block;}
+.product-title { font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 0.5rem; }
+.product-price { color: var(--gold); font-weight: 600; font-size: 1rem; }
+
+.add-btn {
+    width: 100%; padding: 1.2rem;
+    background: var(--charcoal); color: white;
+    border: none; text-transform: uppercase;
+    font-size: 0.75rem; letter-spacing: 2px;
+    cursor: pointer; transition: background 0.3s;
+}
+.add-btn:hover { background: var(--gold); }
+
+/* WISHLIST BUTTON (On Card) */
+.wishlist-btn {
+    position: absolute; top: 15px; right: 15px;
+    background: white; border: none;
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    z-index: 10;
+    opacity: 0; /* Hidden until hover */
+    transform: translateY(-10px);
+}
+.product-img-container:hover .wishlist-btn {
+    opacity: 1; transform: translateY(0);
+}
+.wishlist-btn svg {
+    width: 18px; height: 18px;
+    stroke: var(--charcoal); fill: transparent;
+    transition: all 0.3s;
+}
+.wishlist-btn:hover { transform: scale(1.1) !important; }
+.wishlist-btn.liked svg {
+    fill: #E8A0A0; stroke: #E8A0A0;
+}
+
+/* =========================================
+   6. SIDEBARS (CART & WISHLIST) - FIXED
+   ========================================= */
+
+/* Base Sidebar Styles */
+.cart-sidebar {
+    position: fixed; top: 0; right: 0;
+    width: 450px; height: 100vh;
+    background: white;
+    z-index: 2000;
+    transform: translateX(100%); /* Hidden by default */
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+    display: flex; flex-direction: column;
+}
+.cart-header { padding: 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+.cart-items { flex: 1; overflow-y: auto; padding: 2rem; }
+.cart-footer { padding: 2rem; background: #fafafa; }
+.checkout-btn { width: 100%; padding: 1.2rem; background: var(--gold); border: none; color: white; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: background 0.3s; }
+.checkout-btn:hover { background: var(--gold-hover); }
+
+/* Base Overlay Styles */
+.cart-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+/* Specific Wishlist Z-Index fixes */
+#wishlist-overlay { z-index: 2001; }
+#wishlist-sidebar { z-index: 2002; }
+
+/* --- THE FIX: SPECIFIC TARGETING --- */
+
+/* Only open Cart Sidebar when body has 'cart-open' */
+body.cart-open #cart-sidebar { transform: translateX(0); }
+body.cart-open #cart-overlay { opacity: 1; pointer-events: all; }
+
+/* Only open Wishlist Sidebar when body has 'wishlist-open' */
+body.wishlist-open #wishlist-sidebar { transform: translateX(0); }
+body.wishlist-open #wishlist-overlay { opacity: 1; pointer-events: all; }
+
+/* Lock scroll on both */
+body.cart-open, body.wishlist-open { overflow: hidden; }
+
+
+/* =========================================
+   7. FOOTER
+   ========================================= */
+.footer {
+    background-color: var(--charcoal);
+    color: white;
+    padding: 5rem 0 2rem;
+    margin-top: 4rem;
+}
+.footer-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+.footer-brand p {
+    font-size: 0.85rem; color: #aaa;
+    margin: 1.5rem 0; line-height: 1.8;
+}
+.social-icons { display: flex; gap: 1rem; }
+.social-icons a { color: white; transition: color 0.3s; }
+.social-icons a:hover { color: var(--gold); }
+
+.footer-links h4, .footer-newsletter h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem; letter-spacing: 1px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 0.8rem; }
+.footer-links a {
+    text-decoration: none; color: #aaa;
+    font-size: 0.85rem; transition: color 0.3s;
+    width: fit-content;
+}
+.footer-links a:hover { color: white; transform: translateX(5px); }
+
+.newsletter-form {
+    display: flex; border-bottom: 1px solid #444;
+    padding-bottom: 0.5rem;
+}
+.newsletter-form input {
+    background: transparent; border: none; color: white;
+    flex: 1; font-family: var(--font-body);
+    font-size: 0.9rem; outline: none;
+}
+.newsletter-form button {
+    background: transparent; border: none;
+    color: var(--gold); text-transform: uppercase;
+    font-size: 0.75rem; letter-spacing: 2px;
+    cursor: pointer; transition: color 0.3s;
+}
+.newsletter-form button:hover { color: white; }
+.footer-bottom {
+    border-top: 1px solid #222; padding-top: 2rem;
+    text-align: center; font-size: 0.75rem;
+    color: #555; letter-spacing: 1px;
+}
+
+/* =========================================
+   8. RESPONSIVE & ANIMATION
+   ========================================= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+    .footer-content { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 3rem; }
+    .nav-links { display: none; }
+    .cart-sidebar { width: 100%; }
+    .filter-container { gap: 1rem; }
+}
+
+@media (max-width: 600px) {
+    .footer-content { grid-template-columns: 1fr; text-align: center; }
+    .footer-links { align-items: center; }
+    .footer-brand { display: flex; flex-direction: column; align-items: center; }
+    .newsletter-form { justify-content: center; }
+}
+
+/* --- MAGIC ANIMATIONS --- */
+
+/* The 'Throw' Keyframes */
+@keyframes slideThrow {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    30% {
+        transform: translateX(-20px) scale(1.02); /* Little pull back before throw */
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(120%) rotate(20deg) scale(0.8); /* Throw to right */
+        opacity: 0;
+    }
+}
+
+/* Class to trigger animation */
+.magic-vanish {
+    animation: slideThrow 0.6s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+    pointer-events: none; /* Prevent clicking while flying */
+}
+
+/* --- CHECKOUT MODAL STYLES --- */
+.checkout-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 3000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.checkout-overlay.active {
+    opacity: 1; pointer-events: all;
+}
+
+.checkout-box {
+    background: white;
+    padding: 3rem;
+    width: 90%; max-width: 450px;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.checkout-overlay.active .checkout-box {
+    transform: translateY(0);
+}
+
+/* 1. LOADING SPINNER */
+.spinner {
+    width: 50px; height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--gold);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+#checkout-loading p {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--charcoal);
+    letter-spacing: 1px;
+}
+
+/* 2. SUCCESS STATE */
+.success-icon {
+    color: var(--gold);
+    margin-bottom: 1rem;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#checkout-success h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--charcoal);
+}
+
+#checkout-success p {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.sub-text { font-size: 0.8rem; color: #999; margin-bottom: 2rem; }
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- MODAL BUTTON FIX --- */
+.btn-modal {
+    background-color: var(--gold);
+    color: white;
+    padding: 1rem 3rem;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid var(--gold);
+}
+
+.btn-modal:hover {
+    background-color: white;
+    color: var(--gold);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+}
+/* =========================================
+   9. RESPONSIVE DESIGN (MOBILE FIXES)
+   ========================================= */
+
+/* Default: Hide Mobile Elements on Desktop */
+.mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; color: var(--charcoal); }
+.mobile-nav-header { display: none; }
+#mobile-menu-overlay { z-index: 2005; } /* Higher than sidebar */
+
+/* --- TABLET & MOBILE (Max Width 900px) --- */
+@media (max-width: 900px) {
+    /* 1. Header Changes */
+    .mobile-menu-btn { display: block; margin-right: 1rem; }
+    
+    /* Hide Profile on Mobile to save space */
+    .profile-dropdown { display: none; }
+    
+    .logo { font-size: 1.5rem; }
+    
+    /* 2. THE FIX: Force Display Flex to override any "display: none" */
+    .nav-links {
+        display: flex !important; /* CRITICAL FIX */
+        position: fixed;
+        top: 0; left: 0;
+        height: 100vh; 
+        width: 80%; max-width: 300px;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+        box-shadow: 5px 0 30px rgba(0,0,0,0.1);
+        transform: translateX(-100%); /* Hidden to left */
+        transition: transform 0.3s ease;
+        z-index: 3000; /* Highest Z-Index */
+        gap: 0;
+        visibility: visible;
+    }
+
+    /* When Active (Class added by JS) */
+    .nav-links.active {
+        transform: translateX(0); /* Slide in */
+    }
+
+    /* Mobile Menu Header */
+    .mobile-nav-header {
+        display: flex !important; 
+        justify-content: space-between; align-items: center;
+        width: 100%; padding: 1.5rem 2rem;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 1rem;
+    }
+    .mobile-close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--charcoal); }
+
+    /* Links inside mobile menu */
+    .nav-links a {
+        width: 100%; padding: 1rem 2rem;
+        font-size: 0.9rem;
+        border-bottom: 1px solid #f9f9f9;
+        text-align: left;
+    }
+    .nav-links a:hover { background: #fafafa; color: var(--gold); }
+    .nav-links a::after { display: none; } /* Remove desktop underline */
+
+    /* 3. Hero Text Scaling */
+    .hero-content h1 { font-size: 3rem; }
+    .hero-content p { font-size: 1rem; padding: 0 1rem; }
+
+    /* 4. Sidebars (Cart/Wishlist) go Full Width */
+    .cart-sidebar { width: 100%; }
+
+    /* 5. Checkout Modal */
+    .checkout-box { width: 95%; padding: 2rem; }
+}
+
+/* --- SMALL MOBILE (Max Width 480px) --- */
+@media (max-width: 480px) {
+    .hero-content h1 { font-size: 2.5rem; }
+    .container { padding: 0 1rem; }
+    .product-grid { grid-template-columns: 1fr; } /* 1 Column on small phones */
+    
+    /* Make buttons bigger for touch */
+    .btn-glass, .add-btn, .checkout-btn { padding: 1rem; }
+    
+    /* Adjust Filter Tabs */
+    .filter-container { gap: 1rem; }
+    .filter-btn { font-size: 0.7rem; }
+}
+
+/* Helper to show overlay when menu is open */
+body.mobile-menu-open #mobile-menu-overlay {
+    opacity: 1; pointer-events: all;
+}

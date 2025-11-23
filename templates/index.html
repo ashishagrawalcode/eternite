@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éternité | Timeless Fragrance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="container">
+            
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+
+            <a href="#" class="logo">Éternité</a>
+            
+            <div class="nav-links" id="nav-links">
+                <div class="mobile-nav-header">
+                    <span style="font-family:var(--font-heading); font-size:1.5rem;">Menu</span>
+                    <button class="mobile-close-btn" onclick="toggleMobileMenu()">&times;</button>
+                </div>
+
+                <a href="#collection" onclick="toggleMobileMenu()">Collection</a>
+                <a href="#" onclick="filterProducts('Perfume', null); toggleMobileMenu()">Perfumes</a>
+                <a href="#" onclick="toggleMobileMenu()">Our Story</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="icon-btn" onclick="toggleWishlistSidebar(true)" title="Wishlist">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+
+                <div class="icon-btn cart-btn" onclick="toggleCart(true)" title="View Cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </div>
+
+                <div class="profile-dropdown">
+                    <button class="icon-btn">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">My Account</a>
+                        <a href="#">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="mobile-menu-overlay" class="cart-overlay" onclick="toggleMobileMenu()"></div>
+
+    <header class="hero">
+        <img src="{{ url_for('static', filename='images/hero-banner.jpg') }}" class="hero-bg" alt="Luxury Perfume">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Luxury that feels <br><span>effortless</span></h1>
+            <p>French elegance captured in a single bottle.</p>
+            <a href="#collection" class="btn-glass">Explore Collection</a>
+        </div>
+    </header>
+
+    <section id="collection">
+        <h2 class="section-title">The Collection</h2>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterProducts('All', this)">All</button>
+            <button class="filter-btn" onclick="filterProducts('Perfume', this)">Perfumes</button>
+            <button class="filter-btn" onclick="filterProducts('Mist', this)">Mists</button>
+            <button class="filter-btn" onclick="filterProducts('Lotion', this)">Lotions</button>
+            <button class="filter-btn" onclick="filterProducts('Home', this)">Home</button>
+        </div>
+
+        <div id="product-grid" class="product-grid">
+            </div>
+    </section>
+
+    <div class="cart-overlay" id="wishlist-overlay" onclick="toggleWishlistSidebar(false)"></div>
+    
+    <div class="cart-sidebar" id="wishlist-sidebar">
+        <div class="cart-header">
+            <h3 style="font-family: var(--font-heading);">Your Favorites</h3>
+            <button onclick="toggleWishlistSidebar(false)" style="border:none; background:transparent; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        
+        <div id="wishlist-items" class="cart-items">
+            </div>
+
+        <div class="cart-footer" style="text-align:center;">
+            <p style="font-size:0.8rem; color:#888; margin-bottom:1rem;">Save these for later or move them to your bag.</p>
+            <button class="checkout-btn" onclick="toggleWishlistSidebar(false)">Keep Shopping</button>
+        </div>
+    </div>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 style="font-family: var(--font-heading);">Your Bag</h3>
+            <button onclick="toggleCart(false)" style="border:none; background:transparent; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem; font-family:var(--font-heading); font-size:1.2rem;">
+                <span>Total</span>
+                <span id="cart-total">₹0</span>
+            </div>
+            <button class="checkout-btn" onclick="processCheckout()">Checkout</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                
+                <div class="footer-brand">
+                    <h2 class="logo" style="color:white; border-color:white;">Éternité</h2>
+                    <p>French elegance captured in a bottle. <br>Designed for the modern connoisseur.</p>
+                    <div class="social-icons">
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <a href="#" onclick="filterProducts('Perfume', null); document.getElementById('collection').scrollIntoView();">Perfumes</a>
+                    <a href="#" onclick="filterProducts('Mist', null); document.getElementById('collection').scrollIntoView();">Body Mists</a>
+                    <a href="#" onclick="filterProducts('Home', null); document.getElementById('collection').scrollIntoView();">Home Fragrance</a>
+                    <a href="#">Gift Sets</a>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <a href="#">Contact Us</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Returns & Exchanges</a>
+                    <a href="#">FAQ</a>
+                </div>
+
+                <div class="footer-newsletter">
+                    <h4>The Newsletter</h4>
+                    <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
+                    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                        <input type="email" placeholder="Enter your email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Éternité Fragrances. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="checkout-modal" class="checkout-overlay">
+        <div class="checkout-box">
+            
+            <div id="checkout-loading">
+                <div class="spinner"></div>
+                <p>Processing Payment...</p>
+            </div>
+
+            <div id="checkout-success" style="display: none;">
+                <div class="success-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <h3>Merci, <span style="font-style:italic;">Beautiful.</span></h3>
+                <p>Your order <span id="order-id" style="color:var(--gold); font-weight:700;">#0000</span> has been confirmed.</p>
+                <p class="sub-text">A confirmation email has been sent to you.</p>
+                <button class="btn-modal" onclick="closeCheckout()">Continue Shopping</button>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
