@@ -2,7 +2,7 @@
    1. DATA & STATE
    ========================================= */
 const products = [
-    // PERFUMES
+    // --- PERFUMES ---
     { id: 1, name: "Éternité Fleur", category: "Perfume", price: 799, notes: "Rose • Jasmine • Vanilla", img: "/static/images/products/Eternite-Fleur.jpg" },
     { id: 2, name: "Éternité Noir", category: "Perfume", price: 899, notes: "Amber • Musk • Oud", img: "/static/images/products/Eternite-noir.jpg" },
     { id: 3, name: "Éternité Lumière", category: "Perfume", price: 849, notes: "Citrus • Bergamot", img: "/static/images/products/Eternite-lumiere.jpg" },
@@ -12,10 +12,26 @@ const products = [
     { id: 7, name: "Éternité Blossom", category: "Perfume", price: 749, notes: "Cherry Blossom • Peach", img: "/static/images/products/Eternite-blossom.jpg" },
     { id: 8, name: "Homme Classique", category: "Perfume", price: 999, notes: "Cedar • Vetiver", img: "/static/images/products/Eternite-hommie.jpg" },
 
-    // OTHER CATEGORIES
-    { id: 9, name: "Peach Mist", category: "Mist", price: 349, notes: "Fruity • Sweet", img: "" },
-    { id: 10, name: "Vanilla Lotion", category: "Lotion", price: 499, notes: "Hydrating • Soft", img: "" },
-    { id: 11, name: "Rose Candle", category: "Home", price: 599, notes: "Soy Wax • 40hr", img: "" }
+    // --- BODY MISTS ---
+    { id: 9, name: "Peach Blossom Mist", category: "Mist", price: 349, notes: "Fruity • Sweet", img: "/static/images/products/mist-peach.jpg" },
+    { id: 10, name: "Vanilla Dream Mist", category: "Mist", price: 399, notes: "Warm • Cozy", img: "/static/images/products/mist-vanilla.jpg" },
+    { id: 11, name: "Coconut Breeze", category: "Mist", price: 399, notes: "Tropical • Fresh", img: "/static/images/products/mist-coconut.jpg" },
+
+    // --- BODY LOTIONS ---
+    { id: 12, name: "Fleur Body Lotion", category: "Lotion", price: 499, notes: "Rose • Hydrating • Smooth", img: "/static/images/products/lotion-fleur.jpg" },
+    { id: 13, name: "Noir Body Lotion", category: "Lotion", price: 599, notes: "Amber • Velvet Texture", img: "/static/images/products/lotion-noir.jpg" },
+    { id: 14, name: "Blossom Body Lotion", category: "Lotion", price: 499, notes: "Peach • Non-greasy", img: "/static/images/products/lotion-blossom.jpg" },
+
+    // --- HOME FRAGRANCE ---
+    { id: 15, name: "Fleur Scented Candle", category: "Home", price: 599, notes: "Rose • 30hr Burn • Matte White", img: "/static/images/products/candle-fleur.jpg" },
+    { id: 16, name: "Noir Scented Candle", category: "Home", price: 699, notes: "Oud • Evening Vibe • Black Jar", img: "/static/images/products/candle-noir.jpg" },
+    { id: 17, name: "Vanilla Reed Diffuser", category: "Home", price: 799, notes: "Sandalwood • Slow Release", img: "/static/images/products/diffuser-vanilla.jpg" },
+
+    // --- GIFT SETS ---
+    { id: 18, name: "Mini Perfume Set", category: "Gift Set", price: 499, notes: "3 x 10ml (Fleur, Noir, Blossom)", img: "/static/images/products/gift-mini.jpg" },
+    { id: 19, name: "Luxury Pamper Box", category: "Gift Set", price: 1499, notes: "Perfume + Lotion + Candle", img: "/static/images/products/gift-pamper.jpg" },
+    { id: 20, name: "Self-Care Basket", category: "Gift Set", price: 999, notes: "Mist + Hand Cream + Candle", img: "/static/images/products/gift-basket.jpg" },
+    { id: 21, name: "Couple Duo Set", category: "Gift Set", price: 1299, notes: "Noir + Blossom Pairing", img: "/static/images/products/gift-couple.jpg" }
 ];
 
 // State Management
