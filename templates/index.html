@@ -10,6 +10,13 @@
 </head>
 <body>
 
+    <div id="preloader">
+        <div class="loader-content">
+            <h1 class="loader-logo">Éternité</h1>
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
     <nav id="navbar">
         <div class="container">
             
@@ -76,6 +83,7 @@
             <h1>Luxury that feels <br><span>effortless</span></h1>
             <p>French elegance captured in a single bottle.</p>
             <a href="#collection" class="btn-glass">Explore Collection</a>
+            <button onclick="openQuiz()" class="btn-glass" style="background:white; color:var(--charcoal);">Find My Scent</button>
         </div>
     </header>
 
@@ -137,6 +145,12 @@
         <div class="cart-header">
             <h3 style="font-family: var(--font-heading);">Your Bag</h3>
             <button onclick="toggleCart(false)" style="border:none; background:transparent; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div class="shipping-container">
+            <p id="shipping-msg">Spend <span style="font-weight:700; color:var(--charcoal);">₹1,500</span> for Free Shipping</p>
+            <div class="progress-track">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
         </div>
         <div id="cart-items" class="cart-items"></div>
         <div class="cart-footer">
@@ -250,6 +264,82 @@
                 <p>Your order <span id="order-id" style="color:var(--gold); font-weight:700;">#0000</span> has been confirmed.</p>
                 <p class="sub-text">A confirmation email has been sent to you.</p>
                 <button class="btn-modal" onclick="closeCheckout()">Continue Shopping</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="product-modal" class="checkout-overlay" onclick="closeProductModal()">
+        <div class="product-modal-box" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeProductModal()">&times;</button>
+            
+            <div class="modal-content-grid">
+                <div class="modal-img-wrapper">
+                    <img id="modal-img" src="" alt="">
+                </div>
+                
+                <div class="modal-details">
+                    <span id="modal-cat" class="product-cat">CATEGORY</span>
+                    <h2 id="modal-title">Product Name</h2>
+                    <p id="modal-notes" class="product-notes" style="margin-top:0.5rem; color:#888;"></p>
+                    <p id="modal-price" class="product-price" style="font-size:1.5rem; margin: 1rem 0; color:var(--gold);">₹0</p>
+                    
+                    <div class="divider" style="height:1px; background:#eee; margin: 1.5rem 0;"></div>
+                    
+                    <p id="modal-desc" style="color:#555; line-height:1.8; margin-bottom:2rem; font-size:0.95rem;">
+                        Description goes here.
+                    </p>
+                    
+                    <div class="modal-actions">
+                        <button id="modal-add-btn" class="add-btn" style="width:100%;">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-modal" class="checkout-overlay">
+        <div class="quiz-box">
+            <button class="close-modal" onclick="closeQuiz()">&times;</button>
+            
+            <div id="quiz-step-0" class="quiz-step active">
+                <h2 style="font-family:var(--font-heading); font-size:2rem; margin-bottom:1rem;">Find Your Signature</h2>
+                <p style="color:#666; margin-bottom:2rem;">Answer 3 simple questions to discover the scent that defines you.</p>
+                <button class="btn-modal" onclick="nextQuizStep(1)">Start Journey</button>
+            </div>
+
+            <div id="quiz-step-1" class="quiz-step">
+                <h3>What is your vibe today?</h3>
+                <div class="quiz-options">
+                    <button onclick="selectQuizAnswer('mood', 'fresh')">🌿 Fresh & Clean</button>
+                    <button onclick="selectQuizAnswer('mood', 'romantic')">🌹 Soft & Romantic</button>
+                    <button onclick="selectQuizAnswer('mood', 'bold')">🔥 Bold & Mysterious</button>
+                    <button onclick="selectQuizAnswer('mood', 'warm')">☕ Warm & Cozy</button>
+                </div>
+            </div>
+
+            <div id="quiz-step-2" class="quiz-step">
+                <h3>Where are you going?</h3>
+                <div class="quiz-options">
+                    <button onclick="selectQuizAnswer('time', 'day')">☀️ Brunch / Office</button>
+                    <button onclick="selectQuizAnswer('time', 'night')">🌙 Date Night / Gala</button>
+                    <button onclick="selectQuizAnswer('time', 'vacation')">🌊 Beach Vacation</button>
+                </div>
+            </div>
+
+            <div id="quiz-loading" class="quiz-step">
+                <div class="spinner"></div>
+                <p>Curating your match...</p>
+            </div>
+
+            <div id="quiz-result" class="quiz-step">
+                <p style="color:#999; text-transform:uppercase; font-size:0.8rem; letter-spacing:2px;">Your Signature Scent is</p>
+                <h2 id="result-name" style="font-family:var(--font-heading); font-size:2.5rem; color:var(--gold); margin:1rem 0;">Product Name</h2>
+                <img id="result-img" src="" style="height:200px; margin:1rem auto; display:block; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.1));">
+                <p id="result-desc" style="color:#666; font-size:0.9rem; margin-bottom:2rem;">Description.</p>
+                <button id="result-btn" class="btn-modal">View Details</button>
+                <br>
+                <button onclick="resetQuiz()" style="background:none; border:none; color:#999; font-size:0.8rem; margin-top:1rem; cursor:pointer; border-bottom:1px solid #ddd;">Retake Quiz</button>
             </div>
 
         </div>

@@ -1,37 +1,73 @@
 /* =========================================
-   1. DATA & STATE
+   0. PRELOADER LOGIC
    ========================================= */
+window.addEventListener('load', () => {
+    // Minimum wait time of 1.5s to show off the animation
+    // (Optional: remove setTimeout if you want it instant)
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 1500);
+});
+
 const products = [
-    // --- PERFUMES ---
-    { id: 1, name: "Éternité Fleur", category: "Perfume", price: 799, notes: "Rose • Jasmine • Vanilla", img: "/static/images/products/Eternite-Fleur.jpg" },
-    { id: 2, name: "Éternité Noir", category: "Perfume", price: 899, notes: "Amber • Musk • Oud", img: "/static/images/products/Eternite-noir.jpg" },
-    { id: 3, name: "Éternité Lumière", category: "Perfume", price: 849, notes: "Citrus • Bergamot", img: "/static/images/products/Eternite-lumiere.jpg" },
-    { id: 4, name: "Éternité Royale", category: "Perfume", price: 1199, notes: "Saffron • Patchouli", img: "/static/images/products/Eternite-royale.jpg" },
-    { id: 5, name: "Éternité Marine", category: "Perfume", price: 799, notes: "Sea Salt • Driftwood", img: "/static/images/products/Eternite-marine.jpg" },
-    { id: 6, name: "Café Parisien", category: "Perfume", price: 899, notes: "Coffee • Caramel", img: "/static/images/products/Eternite-parisien.jpg" },
-    { id: 7, name: "Éternité Blossom", category: "Perfume", price: 749, notes: "Cherry Blossom • Peach", img: "/static/images/products/Eternite-blossom.jpg" },
-    { id: 8, name: "Homme Classique", category: "Perfume", price: 999, notes: "Cedar • Vetiver", img: "/static/images/products/Eternite-hommie.jpg" },
+    // PERFUMES
+    { 
+        id: 1, name: "Éternité Fleur", category: "Perfume", price: 799, 
+        notes: "Rose • Jasmine • Vanilla", 
+        desc: "A tribute to the eternal spring of Provence. Soft rose petals blended with creamy vanilla create a scent that is both innocent and deeply romantic.",
+        img: "/static/images/products/Eternite-Fleur.jpg" 
+    },
+    { 
+        id: 2, name: "Éternité Noir", category: "Perfume", price: 899, 
+        notes: "Amber • Musk • Oud", 
+        desc: "Designed for the night. A mysterious blend of rich Oud and warm Amber that lingers on the skin like a secret.",
+        img: "/static/images/products/Eternite-noir.jpg" 
+    },
+    { 
+        id: 3, name: "Éternité Lumière", category: "Perfume", price: 849, 
+        notes: "Citrus • Bergamot", 
+        desc: "Capture the morning light. Crisp citrus notes awaken the senses, followed by a clean, white musk finish.",
+        img: "/static/images/products/Eternite-lumiere.jpg" 
+    },
+    { 
+        id: 4, name: "Éternité Royale", category: "Perfume", price: 1199, 
+        notes: "Saffron • Patchouli", 
+        desc: "A scent fit for royalty. Rare saffron spice meets earthy patchouli for a fragrance that commands attention.",
+        img: "/static/images/products/Eternite-royale.jpg" 
+    },
+    { 
+        id: 5, name: "Éternité Marine", category: "Perfume", price: 799, 
+        notes: "Sea Salt • Driftwood", 
+        desc: "The essence of the ocean breeze. Fresh, salty, and liberating, like a walk along the French Riviera.",
+        img: "/static/images/products/Eternite-marine.jpg" 
+    },
+    { 
+        id: 6, name: "Café Parisien", category: "Perfume", price: 899, 
+        notes: "Coffee • Caramel", 
+        desc: "Warm and addictive. The comforting aroma of roasted coffee beans and sweet caramel on a rainy Paris afternoon.",
+        img: "/static/images/products/Eternite-parisien.jpg" 
+    },
+    { 
+        id: 7, name: "Éternité Blossom", category: "Perfume", price: 749, 
+        notes: "Cherry Blossom • Peach", 
+        desc: "Sweet and youthful. Juicy peach notes blend with delicate cherry blossoms for a pure joy in a bottle.",
+        img: "/static/images/products/Eternite-blossom.jpg" 
+    },
+    { 
+        id: 8, name: "Homme Classique", category: "Perfume", price: 999, 
+        notes: "Cedar • Vetiver", 
+        desc: "Timeless masculinity. Dry cedarwood and earthy vetiver create a clean, minimal signature scent.",
+        img: "/static/images/products/Eternite-hommie.jpg" 
+    },
 
-    // --- BODY MISTS ---
-    { id: 9, name: "Peach Blossom Mist", category: "Mist", price: 349, notes: "Fruity • Sweet", img: "/static/images/products/mist-peach.jpg" },
-    { id: 10, name: "Vanilla Dream Mist", category: "Mist", price: 399, notes: "Warm • Cozy", img: "/static/images/products/mist-vanilla.jpg" },
-    { id: 11, name: "Coconut Breeze", category: "Mist", price: 399, notes: "Tropical • Fresh", img: "/static/images/products/mist-coconut.jpg" },
-
-    // --- BODY LOTIONS ---
-    { id: 12, name: "Fleur Body Lotion", category: "Lotion", price: 499, notes: "Rose • Hydrating • Smooth", img: "/static/images/products/lotion-fleur.jpg" },
-    { id: 13, name: "Noir Body Lotion", category: "Lotion", price: 599, notes: "Amber • Velvet Texture", img: "/static/images/products/lotion-noir.jpg" },
-    { id: 14, name: "Blossom Body Lotion", category: "Lotion", price: 499, notes: "Peach • Non-greasy", img: "/static/images/products/lotion-blossom.jpg" },
-
-    // --- HOME FRAGRANCE ---
-    { id: 15, name: "Fleur Scented Candle", category: "Home", price: 599, notes: "Rose • 30hr Burn • Matte White", img: "/static/images/products/candle-fleur.jpg" },
-    { id: 16, name: "Noir Scented Candle", category: "Home", price: 699, notes: "Oud • Evening Vibe • Black Jar", img: "/static/images/products/candle-noir.jpg" },
-    { id: 17, name: "Vanilla Reed Diffuser", category: "Home", price: 799, notes: "Sandalwood • Slow Release", img: "/static/images/products/diffuser-vanilla.jpg" },
-
-    // --- GIFT SETS ---
-    { id: 18, name: "Mini Perfume Set", category: "Gift Set", price: 499, notes: "3 x 10ml (Fleur, Noir, Blossom)", img: "/static/images/products/gift-mini.jpg" },
-    { id: 19, name: "Luxury Pamper Box", category: "Gift Set", price: 1499, notes: "Perfume + Lotion + Candle", img: "/static/images/products/gift-pamper.jpg" },
-    { id: 20, name: "Self-Care Basket", category: "Gift Set", price: 999, notes: "Mist + Hand Cream + Candle", img: "/static/images/products/gift-basket.jpg" },
-    { id: 21, name: "Couple Duo Set", category: "Gift Set", price: 1299, notes: "Noir + Blossom Pairing", img: "/static/images/products/gift-couple.jpg" }
+    // OTHERS
+    { id: 9, name: "Peach Mist", category: "Mist", price: 349, notes: "Fruity • Sweet", desc: "A light, refreshing mist for a midday pick-me-up.", img: "/static/images/products/mist-peach.jpg" },
+    { id: 10, name: "Vanilla Lotion", category: "Lotion", price: 499, notes: "Hydrating • Soft", desc: "Deeply moisturizing lotion that leaves skin silky and scented.", img: "/static/images/products/lotion-fleur.jpg" },
+    { id: 11, name: "Rose Candle", category: "Home", price: 599, notes: "Soy Wax • 40hr", desc: "Hand-poured soy wax candle to fill your room with romance.", img: "/static/images/products/candle-fleur.jpg" },
+    { id: 12, name: "Mini Perfume Set", category: "Gift Set", price: 499, notes: "3 x 10ml", desc: "The perfect way to discover your new favorite scent.", img: "/static/images/products/gift-mini.jpg" },
+    { id: 19, name: "Luxury Pamper Box", category: "Gift Set", price: 1499, notes: "Perfume + Lotion + Candle", desc: "The ultimate indulgence. Everything you need for a luxurious night in.", img: "/static/images/products/gift-pamper.jpg" },
+    { id: 20, name: "Self-Care Basket", category: "Gift Set", price: 999, notes: "Mist + Hand Cream + Candle", desc: "Treat yourself or a loved one to this curated basket of essentials.", img: "/static/images/products/gift-basket.jpg" },
+    { id: 21, name: "Couple Duo Set", category: "Gift Set", price: 1299, notes: "Noir + Blossom Pairing", desc: "Two distinct scents that complement each other perfectly.", img: "/static/images/products/gift-couple.jpg" }
 ];
 
 // State Management
@@ -108,7 +144,7 @@ function applyFilters() {
         div.className = 'product-card fade-in';
         div.innerHTML = `
             <div class="product-img-container">
-                <img src="${p.img}" 
+                <img src="${p.img}" loading="lazy"
                      alt="${p.name}" 
                      class="product-img" 
                      onclick="openProductModal(${p.id})" 
@@ -147,17 +183,22 @@ function addToCart(id) {
 }
 
 function updateCart() {
+    // 1. Save state
     localStorage.setItem('eternite-cart', JSON.stringify(cart));
-    const container = document.getElementById('cart-items');
+    
+    // 2. Select Elements
+    const cartItemsContainer = document.getElementById('cart-items'); // Renamed for clarity
     const totalEl = document.getElementById('cart-total');
     const countEl = document.getElementById('cart-count');
     
-    container.innerHTML = '';
+    // 3. Reset HTML
+    cartItemsContainer.innerHTML = '';
     let total = 0;
     let count = 0;
 
+    // 4. Calculate Totals & Render Items
     if(cart.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#999; margin-top:40px;">Your cart is empty.</p>';
+        cartItemsContainer.innerHTML = '<p style="text-align:center; color:#999; margin-top:40px;">Your cart is empty.</p>';
     }
 
     cart.forEach((item, idx) => {
@@ -167,7 +208,7 @@ function updateCart() {
         
         const imgPath = prod.img ? prod.img : "https://placehold.co/100x100/F4F1EA/121212?text=E";
 
-        container.innerHTML += `
+        cartItemsContainer.innerHTML += `
             <div style="display:flex; gap:15px; margin-bottom:20px; align-items:center;">
                 <img src="${imgPath}" style="width:60px; height:60px; object-fit:cover; border:1px solid #f0f0f0;">
                 <div style="flex:1;">
@@ -179,8 +220,30 @@ function updateCart() {
         `;
     });
 
+    // 5. Update Text
     totalEl.innerText = '₹' + total;
     countEl.innerText = count;
+
+    // --- 6. FREE SHIPPING LOGIC (FIXED) ---
+    const threshold = 1500; 
+    const progressBar = document.getElementById('progress-fill');
+    const progressMsg = document.getElementById('shipping-msg');
+    const shippingContainer = document.querySelector('.shipping-container'); // FIXED VARIABLE NAME
+
+    // Safety check: only run if the shipping bar exists in HTML
+    if (progressBar && shippingContainer) {
+        if (total >= threshold) {
+            progressBar.style.width = '100%';
+            progressMsg.innerHTML = "✨ <b>Free Shipping</b> Unlocked!";
+            shippingContainer.classList.add('unlocked');
+        } else {
+            const percentage = (total / threshold) * 100;
+            const remaining = threshold - total;
+            progressBar.style.width = percentage + '%';
+            progressMsg.innerHTML = `Add <b>₹${remaining}</b> for Free Shipping`;
+            shippingContainer.classList.remove('unlocked');
+        }
+    }
 }
 
 function removeFromCart(idx) {
@@ -422,3 +485,127 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCart();
     updateNavbarWishlist();
 });
+
+/* =========================================
+   10. PRODUCT MODAL LOGIC
+   ========================================= */
+function openProductModal(id) {
+    const prod = products.find(p => p.id === id);
+    if(!prod) return;
+
+    // Populate Data
+    document.getElementById('modal-img').src = prod.img || "https://placehold.co/400x500/F4F1EA/121212?text=Éternité";
+    document.getElementById('modal-cat').innerText = prod.category;
+    document.getElementById('modal-title').innerText = prod.name;
+    document.getElementById('modal-notes').innerText = prod.notes;
+    document.getElementById('modal-price').innerText = '₹' + prod.price;
+    document.getElementById('modal-desc').innerText = prod.desc || "Experience the essence of luxury with this signature scent.";
+    
+    // Configure "Add to Cart" button inside modal
+    const btn = document.getElementById('modal-add-btn');
+    // Clone button to remove old event listeners (prevents multiple adds)
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+    
+    newBtn.onclick = function() {
+        addToCart(prod.id);
+        closeProductModal();
+    };
+
+    // Show Modal
+    const modal = document.getElementById('product-modal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Lock scroll
+}
+
+function closeProductModal() {
+    document.getElementById('product-modal').classList.remove('active');
+    document.body.style.overflow = 'auto'; // Unlock scroll
+}
+/* =========================================
+   11. SCENT FINDER QUIZ LOGIC
+   ========================================= */
+let userAnswers = {};
+
+function openQuiz() {
+    document.getElementById('quiz-modal').classList.add('active');
+    resetQuiz();
+}
+
+function closeQuiz() {
+    document.getElementById('quiz-modal').classList.remove('active');
+}
+
+function nextQuizStep(stepIndex) {
+    // Hide all steps
+    document.querySelectorAll('.quiz-step').forEach(el => el.classList.remove('active'));
+    // Show target step
+    document.getElementById(`quiz-step-${stepIndex}`).classList.add('active');
+}
+
+function selectQuizAnswer(key, value) {
+    userAnswers[key] = value;
+    
+    // Logic flow
+    if (key === 'mood') {
+        nextQuizStep(2); // Go to Q2
+    } else if (key === 'time') {
+        calculateResult(); // Finish
+    }
+}
+
+function calculateResult() {
+    // Show loading screen
+    document.getElementById('quiz-step-2').classList.remove('active');
+    document.getElementById('quiz-loading').classList.add('active');
+
+    // THE ALGORITHM
+    // Default fallback
+    let matchId = 1; // Fleur
+
+    const { mood, time } = userAnswers;
+
+    if (mood === 'fresh') {
+        if (time === 'vacation') matchId = 5; // Marine
+        else matchId = 3; // Lumière
+    } 
+    else if (mood === 'romantic') {
+        if (time === 'day') matchId = 7; // Blossom
+        else matchId = 1; // Fleur
+    } 
+    else if (mood === 'bold') {
+        if (time === 'night') matchId = 2; // Noir
+        else matchId = 8; // Homme/Classic
+    } 
+    else if (mood === 'warm') {
+        if (time === 'night') matchId = 4; // Royale
+        else matchId = 6; // Café
+    }
+
+    // Find product data
+    const prod = products.find(p => p.id === matchId);
+
+    // Simulate thinking time (1.5s)
+    setTimeout(() => {
+        // Populate Result
+        document.getElementById('result-name').innerText = prod.name;
+        document.getElementById('result-img').src = prod.img;
+        document.getElementById('result-desc').innerText = prod.desc;
+        
+        // Configure Button
+        const btn = document.getElementById('result-btn');
+        btn.onclick = () => {
+            closeQuiz();
+            openProductModal(prod.id);
+        };
+
+        // Show Result
+        document.getElementById('quiz-loading').classList.remove('active');
+        document.getElementById('quiz-result').classList.add('active');
+    }, 1500);
+}
+
+function resetQuiz() {
+    userAnswers = {};
+    nextQuizStep(0);
+}
