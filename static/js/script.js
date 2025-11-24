@@ -9,8 +9,11 @@ window.addEventListener('load', () => {
     }, 1500);
 });
 
+/* =========================================
+   1. DATA & STATE
+   ========================================= */
 const products = [
-    // PERFUMES
+    // --- PERFUMES (IDs 1-8) ---
     { 
         id: 1, name: "Éternité Fleur", category: "Perfume", price: 799, 
         notes: "Rose • Jasmine • Vanilla", 
@@ -60,14 +63,91 @@ const products = [
         img: "/static/images/products/Eternite-hommie.jpg" 
     },
 
-    // OTHERS
-    { id: 9, name: "Peach Mist", category: "Mist", price: 349, notes: "Fruity • Sweet", desc: "A light, refreshing mist for a midday pick-me-up.", img: "/static/images/products/mist-peach.jpg" },
-    { id: 10, name: "Vanilla Lotion", category: "Lotion", price: 499, notes: "Hydrating • Soft", desc: "Deeply moisturizing lotion that leaves skin silky and scented.", img: "/static/images/products/lotion-fleur.jpg" },
-    { id: 11, name: "Rose Candle", category: "Home", price: 599, notes: "Soy Wax • 40hr", desc: "Hand-poured soy wax candle to fill your room with romance.", img: "/static/images/products/candle-fleur.jpg" },
-    { id: 12, name: "Mini Perfume Set", category: "Gift Set", price: 499, notes: "3 x 10ml", desc: "The perfect way to discover your new favorite scent.", img: "/static/images/products/gift-mini.jpg" },
-    { id: 19, name: "Luxury Pamper Box", category: "Gift Set", price: 1499, notes: "Perfume + Lotion + Candle", desc: "The ultimate indulgence. Everything you need for a luxurious night in.", img: "/static/images/products/gift-pamper.jpg" },
-    { id: 20, name: "Self-Care Basket", category: "Gift Set", price: 999, notes: "Mist + Hand Cream + Candle", desc: "Treat yourself or a loved one to this curated basket of essentials.", img: "/static/images/products/gift-basket.jpg" },
-    { id: 21, name: "Couple Duo Set", category: "Gift Set", price: 1299, notes: "Noir + Blossom Pairing", desc: "Two distinct scents that complement each other perfectly.", img: "/static/images/products/gift-couple.jpg" }
+    // --- BODY MISTS (IDs 9-11) ---
+    { 
+        id: 9, name: "Peach Blossom Mist", category: "Mist", price: 349, 
+        notes: "Fruity • Sweet", 
+        desc: "A light, refreshing mist for a midday pick-me-up. Smells like fresh peaches in the summer sun.", 
+        img: "/static/images/products/mist-peach.jpg" 
+    },
+    { 
+        id: 10, name: "Vanilla Dream Mist", category: "Mist", price: 399, 
+        notes: "Warm • Cozy", 
+        desc: "Like a warm hug. Creamy vanilla notes that wrap you in comfort all day long.", 
+        img: "/static/images/products/mist-vanilla.jpg" 
+    },
+    { 
+        id: 11, name: "Coconut Breeze", category: "Mist", price: 399, 
+        notes: "Tropical • Fresh", 
+        desc: "An instant vacation. Sweet coconut water and tropical breeze captured in a bottle.", 
+        img: "/static/images/products/mist-coconut.jpg" 
+    },
+
+    // --- BODY LOTIONS (IDs 12-14) ---
+    { 
+        id: 12, name: "Fleur Body Lotion", category: "Lotion", price: 499, 
+        notes: "Rose • Hydrating", 
+        desc: "Silky smooth hydration with the signature Fleur rose scent. Perfect for layering.", 
+        img: "/static/images/products/lotion-fleur.jpg" 
+    },
+    { 
+        id: 13, name: "Noir Body Lotion", category: "Lotion", price: 599, 
+        notes: "Amber • Musk", 
+        desc: "A rich, velvety lotion that leaves a hint of mystery on your skin. Ideally suited for evening wear.", 
+        img: "/static/images/products/lotion-noir.jpg" 
+    },
+    { 
+        id: 14, name: "Blossom Body Lotion", category: "Lotion", price: 499, 
+        notes: "Peach • Cherry Blossom", 
+        desc: "Lightweight and non-greasy. Leaves skin feeling fresh, youthful, and softly scented.", 
+        img: "/static/images/products/lotion-blossom.jpg" 
+    },
+
+    // --- HOME FRAGRANCE (IDs 15-17) ---
+    { 
+        id: 15, name: "Fleur Scented Candle", category: "Home", price: 599, 
+        notes: "Rose • Soy Wax • 30hr", 
+        desc: "Fill your room with romance. A clean-burning soy wax candle in a matte white jar.", 
+        img: "/static/images/products/candle-fleur.jpg" 
+    },
+    { 
+        id: 16, name: "Noir Scented Candle", category: "Home", price: 699, 
+        notes: "Oud • Evening Vibe", 
+        desc: "Set the mood. Deep, woody notes in an elegant black matte jar. Perfect for cozy nights.", 
+        img: "/static/images/products/candle-noir.jpg" 
+    },
+    { 
+        id: 17, name: "Vanilla Reed Diffuser", category: "Home", price: 799, 
+        notes: "Sandalwood • Slow Release", 
+        desc: "Constant, subtle fragrance for your living space. Elegant glass bottle with natural reeds.", 
+        img: "/static/images/products/diffuser-vanilla.jpg" 
+    },
+
+    // --- GIFT SETS (IDs 18-21) ---
+    { 
+        id: 18, name: "Mini Perfume Set", category: "Gift Set", price: 499, 
+        notes: "3 x 10ml Samplers", 
+        desc: "Can't decide? Try our best-sellers (Fleur, Noir, Blossom) in travel-friendly sizes.", 
+        img: "/static/images/products/gift-mini.jpg" 
+    },
+    { 
+        id: 19, name: "Luxury Pamper Box", category: "Gift Set", price: 1499, 
+        notes: "Perfume + Lotion + Candle", 
+        desc: "The ultimate indulgence. Everything you need for a luxurious night in.", 
+        img: "/static/images/products/gift-pamper.jpg" 
+    },
+    { 
+        id: 20, name: "Self-Care Basket", category: "Gift Set", price: 999, 
+        notes: "Mist + Hand Cream + Candle", 
+        desc: "Treat yourself or a loved one to this curated basket of essentials. Comes in an aesthetic woven basket.", 
+        img: "/static/images/products/gift-basket.jpg" 
+    },
+    { 
+        id: 21, name: "Couple Duo Set", category: "Gift Set", price: 1299, 
+        notes: "Noir + Blossom Pairing", 
+        desc: "Two distinct scents that complement each other perfectly. A romantic gift pairing.", 
+        img: "/static/images/products/gift-couple.jpg" 
+    }
 ];
 
 // State Management
