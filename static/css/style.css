@@ -282,6 +282,139 @@ nav.scrolled {
 /* =========================================
    5. PRODUCTS GRID
    ========================================= */
+
+/* =========================================
+   SEARCH & SORT CONTROLS (LUXURY REDESIGN)
+   ========================================= */
+.controls-bar {
+    display: flex;
+    justify-content: center; /* Centered for better balance */
+    align-items: center;
+    max-width: 900px; /* Contained width */
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+    gap: 1.5rem;
+}
+
+/* --- 1. THE SEARCH BAR --- */
+.search-wrapper {
+    flex: 2; /* Takes up more space */
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px; /* Full rounded pill */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04); /* Soft Float */
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.search-wrapper:hover {
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.search-wrapper:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1); /* Gold Glow */
+    transform: translateY(0);
+}
+
+.search-wrapper svg {
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.search-wrapper:focus-within svg {
+    color: var(--gold);
+}
+
+.search-wrapper input {
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--charcoal);
+    background: transparent;
+}
+
+.search-wrapper input::placeholder {
+    color: #bbb;
+    font-weight: 300;
+}
+
+/* --- 2. THE SORT DROPDOWN --- */
+.sort-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+/* Custom SVG Arrow for Dropdown */
+.sort-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 10px; 
+    height: 10px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none; /* Click passes through to select */
+    transition: transform 0.3s;
+}
+
+.sort-wrapper:hover::after {
+    transform: translateY(-50%) scale(1.2);
+}
+
+.sort-wrapper select {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    appearance: none; /* Remove default ugly arrow */
+    -webkit-appearance: none;
+    background: white;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.sort-wrapper select:hover {
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.sort-wrapper select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+}
+
+/* RESPONSIVE STACKING */
+@media (max-width: 768px) {
+    .controls-bar {
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 3rem;
+    }
+    .search-wrapper, .sort-wrapper {
+        width: 100%;
+    }
+    /* On mobile, inputs should look slightly larger for touch */
+    .search-wrapper, .sort-wrapper select {
+        padding: 1rem 1.5rem;
+    }
+}
+   
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -816,4 +949,208 @@ body.mobile-menu-open #mobile-menu-overlay {
     .founder-grid { display: flex; flex-direction: column-reverse; }
     .page-header h1 { font-size: 2rem; }
     .founder-img img { width: 80%; margin: 0 auto; display: block; }
+}
+
+/* =========================================
+   11. TESTIMONIALS
+   ========================================= */
+.testimonials-section {
+    padding: 6rem 2rem;
+    background-color: #fff; /* Clean white background */
+    border-top: 1px solid #f4f4f4;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.testimonial-card {
+    background: var(--off-white);
+    padding: 2.5rem;
+    text-align: center;
+    border-radius: 2px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+    border-color: #eee;
+    background: white;
+}
+
+.stars {
+    color: var(--gold);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.review-text {
+    font-family: var(--font-heading);
+    font-style: italic;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.reviewer {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reviewer .name {
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 0.3rem;
+}
+
+.reviewer .location {
+    color: #999;
+    font-size: 0.7rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .testimonials-section {
+        padding: 4rem 1.5rem;
+    }
+}
+
+/* =========================================
+   12. CONTACT PAGE
+   ========================================= */
+.contact-section { padding: 4rem 0 6rem; }
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+/* Left Side Info */
+.contact-info { padding-right: 2rem; }
+.info-item { margin-bottom: 2rem; }
+.info-item h4 {
+    font-family: var(--font-heading);
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+.info-item p { color: var(--charcoal); font-size: 0.95rem; }
+
+/* Right Side Form */
+.contact-form-wrapper {
+    background: white;
+    padding: 3rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+    border-radius: 2px;
+}
+
+.form-group { margin-bottom: 1.5rem; }
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    color: #999;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #eee;
+    font-family: var(--font-body);
+    background: #fafafa;
+    transition: border 0.3s;
+    outline: none;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    border-color: var(--gold);
+    background: white;
+}
+
+/* Responsive Contact */
+@media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-info { padding-right: 0; text-align: center; }
+    .contact-form-wrapper { padding: 1.5rem; }
+}
+
+/* =========================================
+   13. TOAST NOTIFICATIONS (LUXURY ALERT)
+   ========================================= */
+#toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 4000; /* Topmost layer */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.toast {
+    background: white;
+    color: var(--charcoal);
+    padding: 1rem 1.5rem;
+    min-width: 280px;
+    border-left: 4px solid var(--gold); /* Gold accent */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    /* Animation */
+    transform: translateX(120%); /* Start hidden to the right */
+    animation: slideInToast 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.toast.hide {
+    animation: slideOutToast 0.4s ease forwards;
+}
+
+.toast-icon {
+    margin-right: 10px;
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+/* Keyframes */
+@keyframes slideInToast {
+    0% { transform: translateX(120%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutToast {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(120%); opacity: 0; }
+}
+
+/* Mobile adjustment */
+@media (max-width: 480px) {
+    #toast-container { right: 1rem; bottom: 1rem; left: 1rem; }
+    .toast { width: 100%; }
 }

@@ -39,28 +39,65 @@ let cart = JSON.parse(localStorage.getItem('eternite-cart')) || [];
 let wishlist = JSON.parse(localStorage.getItem('eternite-wishlist')) || [];
 
 /* =========================================
-   2. RENDER & FILTER
+   2. SMART FILTERING & SORTING
    ========================================= */
+
+// Track current state
+let currentCategory = 'All';
+
+// The User Trigger for Category Tabs
 function filterProducts(category, btnElement) {
-    // 1. Update UI (Active Button)
+    // Update UI Button State
     if(btnElement) {
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
     }
+    
+    // Set state and run master filter
+    currentCategory = category;
+    applyFilters();
+}
 
+// MASTER FILTER FUNCTION (Runs on Search, Sort, or Tab Click)
+function applyFilters() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const sortValue = document.getElementById('sort-select').value;
     const grid = document.getElementById('product-grid');
+    
+    // 1. Filter by Category
+    let filtered = currentCategory === 'All' 
+        ? products 
+        : products.filter(p => p.category === currentCategory);
+
+    // 2. Filter by Search (Name OR Notes)
+    if (searchInput) {
+        filtered = filtered.filter(p => 
+            p.name.toLowerCase().includes(searchInput) || 
+            p.notes.toLowerCase().includes(searchInput)
+        );
+    }
+
+    // 3. Sort Data
+    if (sortValue === 'price-asc') {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (sortValue === 'price-desc') {
+        filtered.sort((a, b) => b.price - a.price);
+    } else if (sortValue === 'name-asc') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    // 'default' uses original array order (by ID)
+
+    // 4. Render Result
     grid.innerHTML = '';
     
-    // 2. Filter Logic
-    const filtered = category === 'All' 
-        ? products 
-        : products.filter(p => p.category === category);
-
-    // 3. Render
     const elegantFallback = "https://placehold.co/400x500/F4F1EA/121212?text=Éternité&font=playfair-display";
 
     if (filtered.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color:#999;">No products found in this category.</div>';
+        grid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align:center; padding: 60px; color:#999;">
+                <h3 style="font-family:var(--font-heading); margin-bottom:10px;">No matches found</h3>
+                <p>Try adjusting your search or filters.</p>
+            </div>`;
         return;
     }
 
@@ -74,6 +111,8 @@ function filterProducts(category, btnElement) {
                 <img src="${p.img}" 
                      alt="${p.name}" 
                      class="product-img" 
+                     onclick="openProductModal(${p.id})" 
+                     style="cursor:pointer"
                      onerror="this.onerror=null; this.src='${elegantFallback}'">
                 
                 <button class="wishlist-btn ${isLiked}" onclick="toggleProductLike(${p.id}, this)" title="Add to Wishlist">
@@ -94,13 +133,6 @@ function filterProducts(category, btnElement) {
     });
 }
 
-// Navbar Scroll Effect
-window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    if (window.scrollY > 50) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-});
-
 /* =========================================
    3. CART FUNCTIONS
    ========================================= */
@@ -109,7 +141,9 @@ function addToCart(id) {
     if(item) item.qty++;
     else cart.push({id, qty: 1});
     updateCart();
-    toggleCart(true); // Open Cart
+    toggleCart(true);
+    const prod = products.find(p => p.id === id);
+    showToast(`Added ${prod.name} to bag`);
 }
 
 function updateCart() {
@@ -173,11 +207,13 @@ function toggleProductLike(id, btn) {
     
     if (wishlist.includes(id)) {
         wishlist = wishlist.filter(itemId => itemId !== id);
+        showToast("Removed from favorites", "info");
     } else {
         wishlist.push(id);
         // Animation pop
         btn.style.transform = "scale(1.2)";
         setTimeout(() => btn.style.transform = "scale(1)", 200);
+        showToast("Saved to your wishlist");
     }
 
     localStorage.setItem('eternite-wishlist', JSON.stringify(wishlist));
@@ -345,7 +381,40 @@ function toggleMobileMenu() {
 }
 
 /* =========================================
-   8. INIT
+   8. TOAST NOTIFICATION SYSTEM
+   ========================================= */
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    
+    // Create Toast Element
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    
+    // Icon based on type
+    const icon = type === 'success' ? '✨' : '⚠️';
+    
+    toast.innerHTML = `
+        <div style="display:flex; align-items:center;">
+            <span class="toast-icon">${icon}</span>
+            <span>${message}</span>
+        </div>
+    `;
+
+    // Add to screen
+    container.appendChild(toast);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.classList.add('hide');
+        // Wait for animation to finish before removing from DOM
+        setTimeout(() => {
+            toast.remove();
+        }, 400);
+    }, 3000);
+}
+
+/* =========================================
+   9. INIT
    ========================================= */
 document.addEventListener('DOMContentLoaded', () => {
     // Corrected filter syntax
